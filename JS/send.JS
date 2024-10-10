@@ -8,14 +8,14 @@ $(document).ready(function(){
         const cheque = {
             fecha: $('#fechaCheque').val(),
             proveedor_id: $('#proveedorCheque').val(),
-            monto: parseFloat($('#montoCheque').text().trim().replace(/[^0-9.-]+/g, ''))||0,
+            monto: parseFloat($('#montoCheque').val()),
             monto_en_letras: $('#letrasCheque').val(),
             observaciones: $('#observacionesCheque').val()
         }
 
         $.ajax({
             type: 'POST',
-            url: 'bd.php',
+            url: './DB/cheque.php',
             data: { cheque },
             success: function(response) {
                 console.log(response);
@@ -34,5 +34,6 @@ $(document).ready(function(){
                 console.error('Error al enviar los datos: ' + textStatus, errorThrown);
             }
         });   
+        console.log(cheque);
     }
 });

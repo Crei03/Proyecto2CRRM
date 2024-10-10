@@ -10,20 +10,21 @@ $conn = new mysqli($servidor, $usuario, $password, $base_datos);
 if ($conn->connect_error) {
     die(json_encode(array('status' => 'error', 'message' => 'Error de conexión a la base de datos: ' . $conn->connect_error)));
 }
-// Manejo de solicitud GET (para obtener proveedores)
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Consulta para obtener todos los proveedores
-    $query = "SELECT id, nombre FROM proveedores";
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'cheque') {
+    // Obtener el último número de cheque
+    $query = "SELECT numero_cheque FROM cheques ORDER BY numero_cheque DESC LIMIT 1";
     $result = $conn->query($query);
 
-    $proveedores = array();
-    while ($row = $result->fetch_assoc()) {
-        $proveedores[] = $row; // Agregar cada proveedor al array
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $cheque = array('numero_cheque' => $row['numero_cheque']);
+    } else {
+        $cheque = array('status' => 'error', 'message' => 'No se encontró ningún cheque.');
     }
 
-    // Devolver los proveedores en formato JSON
+    // Devolver el cheque en formato JSON
     header('Content-Type: application/json');
-    echo json_encode($proveedores, JSON_PRETTY_PRINT);
+    echo json_encode($cheque, JSON_PRETTY_PRINT);
 }
 
 // Manejo de solicitud POST (para insertar cheque)
@@ -48,7 +49,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cheque'])) {
         // Devolver respuesta de error en formato JSON
         echo json_encode(['status' => 'error', 'message' => $conn->error]);
     }
-}
+} 
 
 // Si no se cumplen las condiciones anteriores, devolver un error
 else {

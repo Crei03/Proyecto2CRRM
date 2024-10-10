@@ -10,21 +10,21 @@
     <div class="panel-cheque">
         <div class="num-cheque">
             <label for="numCheque">Número de Cheque</label>
-            <input type="text" name="numCheque" id="numCheque">
+            <input type="text" name="numeroCheque" id="numeroCheque" disabled>
         </div>
         <div class="fecha-cheque">
             <label for="fechaCheque">Fecha</label>
-            <input type="date" name="fechaCheque" id="fechaCheque">
+            <input type="date" name="fechaCheque" id="fechaCheque" required>
         </div>
         <div class="proveedor-cheque">
             <label for="proveedorCheque">Paguese a la orden de</label>
-            <select name="proveedorCheque" id="proveedorCheque">
+            <select name="proveedorCheque" id="proveedorCheque" required>
                 <option value="1">Seleccione un proveedor</option>
             </select>
         </div>
         <div class="monto-cheque">
             <label for="montoCheque">Monto</label>
-            <input type="text" name="montoCheque" id="montoCheque">
+            <input type="text" name="montoCheque" id="montoCheque" required>
         </div>
         <div class="letras-cheque">
             <label for="letrasCheque">Monto en letras</label>
@@ -32,12 +32,13 @@
         </div>
         <div class="observaciones-cheque">
             <label for="observacionesCheque">Observaciones (máx. 750 caracteres)</label> <br>
-            <textarea name="observacionesCheque" id="observacionesCheque" cols="30" rows="10"></textarea>
+            <textarea name="observacionesCheque" id="observacionesCheque" cols="30" rows="10"></textarea required>
         </div>
         <button id="enviar">Enviar</button>
     </div>
     <script src="./JS/jquery3-4.min.js"></script>
     <script src="./JS/send.js"></script>
+    <script src="./JS/numTexto.js"></script>
     <script src="./JS/app.js"></script>
 </body>
 </html>
