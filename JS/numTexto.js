@@ -78,11 +78,11 @@ class NumeroATexto {
         const m = numero.substring(0, numero.length - 3);
         const miles = parseInt(m);
         if (miles === 1) {
-            return "UN MIL " + this.getCentenas(c);
+            return "MIL " + this.getCentenas(c);
         } else if (miles > 1) {
             let n = this.getCentenas(m);
             if (n.trim().endsWith("UNO")) {
-                n = n.substring(0, n.length - 4) + " UN ";
+                n = n.substring(0, n.length - 4) + "";
             }
             return n + " MIL " + this.getCentenas(c);
         } else {
@@ -100,7 +100,7 @@ class NumeroATexto {
         } else if (millones > 1) {
             n = this.getCentenas(millon) + " MILLONES ";
             if (n.trim().endsWith("UNO MILLONES")) {
-                n = n.substring(0, n.length - 12) + "UN MILLONES ";
+                n = n.substring(0, n.length - 12) + " ";
             }
         }
         return n + this.getMiles(miles);
