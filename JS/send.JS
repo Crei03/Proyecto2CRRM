@@ -7,6 +7,7 @@ $(document).ready(function(){
 
     $('#enviar-proveedor').click(function() {
         sendProveedor();
+        location.reload(true);
     });
 
 });

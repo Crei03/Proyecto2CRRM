@@ -25,7 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     // Devolver los proveedores en formato JSON
     header('Content-Type: application/json');
     echo json_encode($proveedores, JSON_PRETTY_PRINT);
-} 
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'idProveedor') {
+
+    $query = "SELECT id FROM proveedores ORDER BY id DESC LIMIT 1";
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $proveedor = array('id' => $row['id']); 
+    } else {
+        $proveedor = array('status' => 'error', 'message' => 'No se encontró ningún proveedor.');
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($proveedor, JSON_PRETTY_PRINT);
+}
 
 elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proveedor'])) {
     $proveedor = $_POST['proveedor'];
