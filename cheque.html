@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="cheque.css">
+    <link rel="stylesheet" href="CSS/cheque.css">
 </head>
 <body>
     <div class="select-pestana">
-        <div class="pestana" id="cheque"></div>
-        <div class="pestana" id="proveedor"></div>
+        <button class="pestana" id="cheque-tab" >Cheque</button>
+        <button class="pestana" id="proveedor-tab">Proveedor</button>
     </div>
-
-    <div class="panel-cheque" id="cheque">
+    
+    <div class="panel" id="panel-cheque">
+        <h1 class="titulo">Generar Cheque</h1>
         <div class="num-cheque">
             <label for="numCheque">Número de Cheque</label>
             <input type="text" name="numeroCheque" id="numeroCheque" disabled>
         </div>
         <div class="fecha-cheque">
             <label for="fechaCheque">Fecha</label>
-            <input type="date" name="fechaCheque" id="fechaCheque" required>
+            <input type="date"  name="fechaCheque" id="fechaCheque" required>
         </div>
         <div class="proveedor-cheque">
             <label for="proveedorCheque">Paguese a la orden de</label>
@@ -36,23 +37,11 @@
             <input type="text" name="letrasCheque" id="letrasCheque" disabled>
         </div>
         <div class="observaciones-cheque">
-            <label for="observacionesCheque">Observaciones (máx. 750 caracteres)</label> <br>
+            <label for="observacionesCheque">Observaciones</label> <br>
             <textarea name="observacionesCheque" id="observacionesCheque" cols="30" rows="10" class="solo-letras" maxlength="250"></textarea required>
             <p id="contador">0/250</p>
         </div>
         <button id="enviar-cheque">Enviar</button>
-    </div>
-
-    <div class="panel-proveedor" id="proveedor">
-        <div class="id-proveedor">
-            <label for="idProveedor">ID</label>
-            <input type="text" name="idProveedor" id="idProveedor" class="solo-numeros" required>
-        </div>
-        <div class="nombre-proveedor">
-            <label for="nombreProveedor">Nombre</label>
-            <input type="text" name="nombreProveedor" id="nombreProveedor" class="solo-letras" required>
-        </div>
-        <button id="enviar-proveedor">Enviar</button>
     </div>
 
     <script src="./JS/jquery3-4.min.js"></script>

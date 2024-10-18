@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Proveedor</title>
+    <link rel="stylesheet" href="CSS/proveedor.css">
+</head>
+<body>
+    <div class="select-pestana">
+        <button class="pestana" id="cheque-tab">Cheque</button>
+        <button class="pestana" id="proveedor-tab">Proveedor</button>
+    </div>
+    
+    <div class="panel" id="panel-proveedor">
+        <h1 class="titulo">Agregar Proveedor</h1>
+        <div class="id-proveedor">
+            <label for="idProveedor">ID</label>
+            <input type="text" name="idProveedor" id="idProveedor"disabled>
+        </div>
+        <div class="nombre-proveedor">
+            <label for="nombreProveedor">Nombre</label>
+            <input type="text" name="nombreProveedor" id="nombreProveedor" class="solo-letras" required>
+        </div>
+        <button id="enviar-proveedor">Enviar</button>
+    </div>
+
+    <script src="./JS/jquery3-4.min.js"></script>
+    <script src="./JS/send.js"></script>
+    <script src="./JS/numTexto.js"></script>
+    <script src="./JS/app.js"></script>
+</body>
+</html>
