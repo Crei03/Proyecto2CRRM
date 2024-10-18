@@ -3,6 +3,9 @@ $(document).ready(function() {
     // Cargar proveedores al cargar la página
     numeroCheque();
     cargarProveedores();
+    idProveedor();
+    cambiarTab();
+    validacionees();
 
     const convertidor = new NumeroATexto();
     
@@ -16,8 +19,11 @@ $(document).ready(function() {
         $('#contador').text(`${caracteresIngresados}/250 caracteres`);
     });
 
+    $('#fechaCheque').val(fechaActual());
 
+});
 
+function validacionees() {
     $(".solo-letras").on("input", function() {
         var input = $(this);
         var valor = input.val();
@@ -32,36 +38,57 @@ $(document).ready(function() {
     $(".solo-numeros").on("input", function() {
         var input = $(this);
         var valor = input.val();
-    
-        
+
         var soloNumeros = /^\d+(\.\d{1,2})?$/; 
     
         if (!soloNumeros.test(valor)) {
-            input.val(valor.replace(/[^0-9\.]/g, '').replace(/(\.\d{2})\d+/, '$1'));
+            // Reemplaza todo excepto números y un solo punto
+            input.val(
+                valor
+                    .replace(/[^0-9.]/g, '')        // Permitir solo números y el punto
+                    .replace(/(\..*)\./g, '$1')      // Si ya hay un punto, no permitir otro
+                    .replace(/(\.\d{2}).+$/, '$1')   // Limitar a dos dígitos decimales
+            );
         }
     });
+}
 
-    $('#panel-cheque').show();
+function fechaActual() {
+    const fecha = new Date();
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1;
+    const anio = fecha.getFullYear();
+    return `${anio}-${mes}-${dia}`;
+}
 
-    // Función para manejar el clic en las pestañas
-    $('.pestana').on('click', function() {
-        // Remover clase active de todas las pestañas
-        $('.pestana').removeClass('active');
-        // Agregar clase active a la pestaña seleccionada
-        $(this).addClass('active');
-
-        // Ocultar ambos paneles
-        $('#panel-cheque, #panel-proveedor').hide();
-
-        // Mostrar el panel correspondiente al hacer clic
-        if ($(this).attr('id') === 'cheque-tab') {
-            $('#panel-cheque').show();
-        } else if ($(this).attr('id') === 'proveedor-tab') {
-            $('#panel-proveedor').show();
-        }
+function cambiarTab() {
+    $('#cheque-tab').on('click', function() {
+        window.location.href = 'cheque.html';  // Redirigir a cheque.html
     });
 
-});
+    $('#proveedor-tab').on('click', function() {
+        window.location.href = 'proveedor.html';  // Redirigir a proveedor.html
+    });
+}
+
+function idProveedor() {
+    $.ajax({
+        type: 'GET',
+        url: './DB/proveedores.php',
+        data: { action: 'idProveedor' }, 
+        success: function(response) {
+            if (response.id) {
+                var idProveedor = parseInt(response.id) + 1;
+                $('#idProveedor').val(idProveedor); 
+            } else {
+                console.error('No se pudo obtener el id del proveedor. ' + (response.message || ''));
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error al cargar los proveedores: ' + textStatus);
+        }
+    });
+}
 
 function cargarProveedores() {
     $.ajax({
@@ -101,7 +128,6 @@ function numeroCheque() {
         }
     });
 }
-
 
 function limpiarOpciones($selectElement) {
     $selectElement.html('<option value="" disabled selected>Seleccione una opción</option>');
