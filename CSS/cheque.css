@@ -64,6 +64,7 @@ body {
     gap: 15px;
     grid-template-areas:
         "titulo titulo"
+        "buscar buscar"
         "numero fecha"
         "proveedor proveedor"
         "monto letras"
@@ -73,6 +74,51 @@ body {
 .titulo {
     grid-area: titulo; /* Asignar el área del título */
 }
+.buscar-cheque {
+    grid-area: buscar; /* Asignar el área para el contenedor de búsqueda */
+    display: flex;
+    align-items: center;
+    gap: 9px; /* Espacio entre el campo de texto y el botón */
+}
+
+.buscar-cheque input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b3d4fc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+.buscarButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #4a90e2; /* Fondo celeste oscuro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buscarButton:hover {
+    background-color: #357abf; /* Fondo más oscuro al pasar el cursor */
+}
+
+.buscarButton svg {
+    width: 24px;
+    height: 24px;
+    fill: #e8eaed; /* Color del ícono */
+}
+
+/* Ajustar el input para que ocupe más espacio */
+.buscar-cheque input[type="text"] {
+    width: calc(100% - 44px); /* Resta el ancho del ícono y el gap */
+}
+
 .num-cheque {
     grid-area: numero;
 }
@@ -118,12 +164,6 @@ textarea {
     font-size: 16px;
     color: #333333;
     background-color: #ffffff;
-}
-
-input[type="text"]:disabled,
-textarea:disabled {
-    background-color: #e6f1ff; /* Fondo celeste claro para campos deshabilitados */
-    color: #7a7a7a;
 }
 
 button {
