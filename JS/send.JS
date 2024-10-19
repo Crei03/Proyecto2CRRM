@@ -1,14 +1,6 @@
 $(document).ready(function(){
 
-    $('#enviar-cheque').click(function() {
-        sendCheque();
-        location.reload(true);
-    });
-
-    $('#enviar-proveedor').click(function() {
-        sendProveedor();
-        location.reload(true);
-    });
+    validarEnvios();
 
 });
 function sendCheque(){
@@ -65,6 +57,71 @@ function sendProveedor(){
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al enviar los datos: ' + textStatus, errorThrown);
+        }
+    });
+}
+
+function validarEnvios(){
+    $('#enviar-proveedor').on('click', function(event) {
+
+        event.preventDefault();
+
+        let isValid = true;
+
+        let nombreProveedor = $('#nombreProveedor').val().trim();
+        if (nombreProveedor === '') {
+            isValid = false;
+            // Mostrar un mensaje de error (puedes mostrarlo de la forma que prefieras)
+            alert('El nombre del proveedor es obligatorio.');
+        }
+
+        // Si el formulario es válido, se puede proceder a enviarlo
+        if (isValid) {
+            sendProveedor();
+            location.reload(true);
+        }
+        
+    });
+
+    $('#enviar-cheque').on('click', function(event) {
+        // Evitar el comportamiento por defecto del botón
+        event.preventDefault();
+
+        // Variable para verificar si el formulario es válido
+        let isValid = true;
+
+        // Validar el campo "Fecha"
+        let fechaCheque = $('#fechaCheque').val().trim();
+        if (fechaCheque === '') {
+            isValid = false;
+            alert('La fecha del cheque es obligatoria.');
+        }
+
+        // Validar el campo "Proveedor"
+        let proveedorCheque = $('#proveedorCheque').val();
+        if (proveedorCheque === '1' || proveedorCheque === '') {
+            isValid = false;
+            alert('Debe seleccionar un proveedor válido.');
+        }
+
+        // Validar el campo "Monto"
+        let montoCheque = $('#montoCheque').val().trim();
+        if (montoCheque === '' || isNaN(montoCheque)) {
+            isValid = false;
+            alert('El monto del cheque es obligatorio y debe ser un número válido.');
+        }
+
+        // Validar el campo "Observaciones" (si es necesario)
+        let observacionesCheque = $('#observacionesCheque').val().trim();
+        if (observacionesCheque === '') {
+            isValid = false;
+            alert('Debe ingresar observaciones.');
+        }
+
+        // Si el formulario es válido, se puede proceder a enviarlo
+        if (isValid) {
+            sendCheque();
+            location.reload(true);
         }
     });
 }
