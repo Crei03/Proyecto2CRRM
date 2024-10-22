@@ -67,7 +67,8 @@ body {
         "buscar buscar"
         "numero fecha"
         "proveedor proveedor"
-        "monto letras"
+        "monto monto"
+        "letras letras"
         "observaciones observaciones"
         "enviar enviar";
 }
@@ -111,7 +112,7 @@ body {
 .buscarButton svg {
     width: 24px;
     height: 24px;
-    fill: #e8eaed; /* Color del ícono */
+    fill: #e8eaed; 
 }
 
 /* Ajustar el input para que ocupe más espacio */
@@ -134,10 +135,12 @@ body {
 
 .monto-cheque {
     grid-area: monto;
+    grid-column: span 2;
 }
 
 .letras-cheque {
     grid-area: letras;
+    grid-column: span 2;
 }
 
 .observaciones-cheque {
