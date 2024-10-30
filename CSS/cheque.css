@@ -7,10 +7,13 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    
+  
 }
 
+
 .select-pestana {
+    margin-top: 10vh;
     display: flex;
     justify-content: center;
     margin-bottom: 20px; /* Espacio entre los botones y el panel */
@@ -56,6 +59,7 @@ body {
     background-color: #ffffff; /* Fondo blanco */
     border-radius: 12px; /* Bordes redondeados */
     padding: 20px;
+
     max-width: 600px;
     width: 100%;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
@@ -71,6 +75,7 @@ body {
         "letras letras"
         "observaciones observaciones"
         "enviar enviar";
+    margin-bottom: 10vh;
 }
 .titulo {
     grid-area: titulo; /* Asignar el área del título */
@@ -186,6 +191,35 @@ button {
 button:hover {
     background-color: #357abf; /* Botón más oscuro al pasar el cursor */
 }
+
+
+#enviar-cheque{
+    width: 70vw;
+    
+
+}
+
+.botones{
+    /* border: solid 1px black; */
+    grid-column: span 2; /* Expande el div a través de dos columnas */
+    width: 100%; 
+}
+#Anular-cheque{
+    background-color: rgb(138, 15, 15);
+    display: none;
+    margin-left: .5vw;
+}
+
+#Anular-cheque:hover{
+    background-color: rgb(83, 16, 16);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+
 
 textarea {
     resize: none;

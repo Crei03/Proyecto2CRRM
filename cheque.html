@@ -26,7 +26,7 @@
         </div>
         <div class="fecha-cheque">
             <label for="fechaCheque">Fecha</label>
-            <input type="date"  name="fechaCheque" id="fechaCheque" required>
+            <input type="date"  name="fechaCheque" id="fechaCheque" required disabled>
         </div>
         <div class="proveedor-cheque">
             <label for="proveedorCheque">Paguese a la orden de</label>
@@ -44,15 +44,19 @@
         </div>
         <div class="observaciones-cheque">
             <label for="observacionesCheque">Observaciones</label> <br>
-            <textarea name="observacionesCheque" id="observacionesCheque" class="solo-letras" maxlength="250"></textarea required>
+            <textarea name="observacionesCheque" id="observacionesCheque" class="solo-letras-numeros" maxlength="250"></textarea required>
             <p id="contador">0/250</p>
         </div>
-        <button id="enviar-cheque">Enviar</button>
+        <div class="botones" style="display: flex;">
+            <button id="enviar-cheque">Enviar</button>
+            <button id="Anular-cheque">Anular</button>
+        </div>
     </div>
 
     <script src="./JS/jquery3-4.min.js"></script>
     <script src="./JS/send.js"></script>
     <script src="./JS/numTexto.js"></script>
     <script src="./JS/app.js"></script>
+    
 </body>
 </html>

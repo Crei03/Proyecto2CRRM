@@ -47,18 +47,24 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proveedor'])) {
     // Sanitizar los datos recibidos
     $nombre = $conn->real_escape_string($proveedor['nombre']);
 
-    // Manejo de solicitud POST (para agregar un proveedor)
-    if (!isset($_POST['proveedor'])) {
-        die(json_encode(array('status' => 'error', 'message' => 'Falta el nombre del proveedor')));
-    }
+    // Verificar si el proveedor ya existe
+    $checkQuery = "SELECT * FROM proveedores WHERE nombre = '$nombre'";
+    $result = $conn->query($checkQuery);
 
-    $query = "INSERT INTO proveedores (nombre) VALUES ('$nombre')";
-    if ($conn->query($query) === TRUE) {
-        echo json_encode(array('status' => 'success', 'message' => 'Proveedor agregado correctamente'));
+    if ($result->num_rows > 0) {
+        // Si el proveedor ya existe, devolver un mensaje de error
+        echo json_encode(array('status' => 'error', 'message' => 'El proveedor ya existe en la base de datos'));
     } else {
-        echo json_encode(array('status' => 'error', 'message' => 'Error al agregar el proveedor: ' . $conn->error));
+        // Si no existe, proceder a la inserción
+        $query = "INSERT INTO proveedores (nombre) VALUES ('$nombre')";
+        if ($conn->query($query) === TRUE) {
+            echo json_encode(array('status' => 'success', 'message' => 'Proveedor agregado correctamente'));
+        } else {
+            echo json_encode(array('status' => 'error', 'message' => 'Error al agregar el proveedor: ' . $conn->error));
+        }
     }
-} else {
+}
+else {
     // Si no se proporciona una acción válida, devolver un error
     die(json_encode(array('status' => 'error', 'message' => 'Accion no valida')));
 }

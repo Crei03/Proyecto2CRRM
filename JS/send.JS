@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
     validarEnvios();
@@ -5,6 +6,7 @@ $(document).ready(function(){
 });
 function sendCheque(){
     const cheque = {
+        numero_cheque: $('#numeroCheque').val(),
         fecha: $('#fechaCheque').val(),
         proveedor_id: $('#proveedorCheque').val(),
         monto: parseFloat($('#montoCheque').val()),
@@ -19,9 +21,12 @@ function sendCheque(){
         success: function(response) {
             console.log(response);
             try {
-                let jsonResponse = JSON.parse(response);
-                if (jsonResponse.status == 'success') {
+                let jsonResponse = response;
+                console.log(jsonResponse);
+               
+                if (jsonResponse.status === 'success') {
                     alert('Cheque enviado correctamente');
+                    location.reload(true);
                 } else {
                     alert('Error al enviar cheque: ' + jsonResponse.message);
                 }
@@ -35,24 +40,25 @@ function sendCheque(){
     });   
     console.log(cheque);
 }
-
-function sendProveedor(){
-    
+function sendProveedor() {
     $.ajax({
         type: 'POST',
         url: './DB/proveedores.php',
         data: { proveedor: { nombre: $('#nombreProveedor').val() } },
         success: function(response) {
-            console.log(response);
             try {
-                let jsonResponse = JSON.parse(response);
-                if (jsonResponse.status == 'success') {
+                // Convertir el response en un objeto JSON
+                let jsonResponse = JSON.parse(response); 
+                console.log('respuesta: ', jsonResponse);
+
+                if (jsonResponse.status === 'success') {
                     alert('Proveedor enviado correctamente');
+                    location.reload(true);
                 } else {
                     alert('Error al enviar proveedor: ' + jsonResponse.message);
                 }
             } catch (error) {
-                console.error("Error al enviar proveedor", error);
+                console.error("Error al enviar proveedor: ", error);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -60,6 +66,7 @@ function sendProveedor(){
         }
     });
 }
+
 
 function validarEnvios(){
     $('#enviar-proveedor').on('click', function(event) {
@@ -72,13 +79,13 @@ function validarEnvios(){
         if (nombreProveedor === '') {
             isValid = false;
             // Mostrar un mensaje de error (puedes mostrarlo de la forma que prefieras)
-            alert('El nombre del proveedor es obligatorio.');
+           alert('El nombre del proveedor es obligatorio.');
         }
 
         // Si el formulario es válido, se puede proceder a enviarlo
         if (isValid) {
             sendProveedor();
-            location.reload(true);
+            
         }
         
     });
@@ -119,9 +126,11 @@ function validarEnvios(){
         }
 
         // Si el formulario es válido, se puede proceder a enviarlo
+
         if (isValid) {
-            sendCheque();
-            location.reload(true);
-        }
+            sendCheque();   
+        }//else{
+        //      alert("Debe de completar todos los campossssss.");
+        // }
     });
 }
