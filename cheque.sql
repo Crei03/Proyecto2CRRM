@@ -87,7 +87,7 @@ INSERT INTO proveedores (id, nombre) VALUES
 
 -- Índices para tablas volcadas
 
--- Índices de la tabla cheques
+-- Índices de l a tabla cheques
 ALTER TABLE cheques
   ADD PRIMARY KEY (numero_cheque),
   ADD KEY proveedor_id (proveedor_id);
@@ -115,7 +115,7 @@ COMMIT;
 
 -- Agregar la columna 'estado' a la tabla 'cheques'
 ALTER TABLE cheques
-ADD COLUMN estado ENUM('vigente', 'anulado') NOT NULL DEFAULT 'vigente';
+ADD COLUMN estado ENUM('vigente', 'anulado') NOT NULL DEFAULT ' ';
 
 ALTER TABLE cheques
 ADD COLUMN fecha_anulacion date DEFAULT NULL;

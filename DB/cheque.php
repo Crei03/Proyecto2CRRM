@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 $servidor = "localhost";
 $usuario = "d42024";
 $password = "1234";
-$base_datos = "cheque";
+$base_datos = "dbchque";
 
 $conn = new mysqli($servidor, $usuario, $password, $base_datos);
 
@@ -16,11 +16,11 @@ if ($conn->connect_error) {
 }
 
 // Manejo de solicitud GET para buscar un cheque por su número
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numero_cheque'])) {
-    $numero_cheque = intval($_GET['numero_cheque']);
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numero_ck'])) {
+    $numero_ck = intval($_GET['numero_ck']);
 
     // Consultar el cheque por su número
-    $query = "SELECT * FROM cheques WHERE numero_cheque = $numero_cheque";
+    $query = "SELECT * FROM cheques WHERE numero_ck = $numero_ck";
     $result = $conn->query($query);
 
     if (!$result) {
@@ -41,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['numero_cheque'])) {
 // Manejo de solicitud GET para obtener el último número de cheque
 elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'cheque') {
     // Obtener el último número de cheque
-    $query = "SELECT numero_cheque FROM cheques ORDER BY numero_cheque DESC LIMIT 1";
+    $query = "SELECT numero_ck FROM cheques ORDER BY numero_ck DESC LIMIT 1";
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $cheque = array('numero_cheque' => $row['numero_cheque']);
+        $cheque = array('numero_ck' => $row['numero_ck']);
     } else {
         $cheque = array('status' => 'error', 'message' => 'No se encontró ningún cheque.');
     }
@@ -60,7 +60,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cheque'])) {
     $cheque = $_POST['cheque'];
 
     // Sanitizar los datos recibidos
-    $numero_cheque = $conn->real_escape_string($cheque['numero_cheque']);
+    $numero_ck = $conn->real_escape_string($cheque['numero_ck']);
     $fecha = $conn->real_escape_string($cheque['fecha']);
     $proveedor_id = $conn->real_escape_string($cheque['proveedor_id']);
     $monto = floatval($cheque['monto']);
@@ -68,7 +68,7 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cheque'])) {
     $observaciones = $conn->real_escape_string($cheque['observaciones']);
 
     // Verifica si el cheque ya existe
-    $checkSql = "SELECT COUNT(*) AS count FROM cheques WHERE numero_cheque = '$numero_cheque'";
+    $checkSql = "SELECT COUNT(*) AS count FROM cheques WHERE numero_ck = '$numero_ck'";
     $checkResult = $conn->query($checkSql);
     $row = $checkResult->fetch_assoc();
 
@@ -77,8 +77,8 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cheque'])) {
     } else {
         // Si no existe, realiza la inserción
         $sql = "
-            INSERT INTO cheques (numero_cheque, fecha, proveedor_id, monto, monto_en_letras, observaciones)
-            VALUES ('$numero_cheque', '$fecha', '$proveedor_id', '$monto', '$monto_en_letras', '$observaciones')
+            INSERT INTO cheques (numero_ck, fecha, proveedor_id, monto, monto_en_letras, observaciones)
+            VALUES ('$numero_ck', '$fecha', '$proveedor_id', '$monto', '$monto_en_letras', '$observaciones')
         ";
         
         if ($conn->query($sql) === TRUE) {
@@ -89,12 +89,12 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cheque'])) {
     }
 } 
 
-elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['numero_cheque']) && isset($_POST['fecha_anulacion'])) {
-    $numero_cheque = $conn->real_escape_string($_POST['numero_cheque']);
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['numero_ck']) && isset($_POST['fecha_anulacion'])) {
+    $numero_ck = $conn->real_escape_string($_POST['numero_ck']);
     $fecha_anulacion = $conn->real_escape_string($_POST['fecha_anulacion']);
 
     // Actualizar el estado a "anulado" para el cheque especificado
-    $sql = "UPDATE cheques SET estado = 'anulado', fecha_anulacion = '$fecha_anulacion' WHERE numero_cheque = '$numero_cheque' AND fecha_anulacion IS NULL";
+    $sql = "UPDATE cheques SET estado = 'anulado', fecha_anulacion = '$fecha_anulacion' WHERE numero_ck = '$numero_ck' AND fecha_anulacion IS NULL";
 
 
     if ($conn->query($sql) === TRUE) {

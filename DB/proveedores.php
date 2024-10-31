@@ -2,7 +2,7 @@
 $servidor = "localhost";
 $usuario = "d42024";
 $password = "1234";
-$base_datos = "cheque";
+$base_datos = "dbchque";
 
 $conn = new mysqli($servidor, $usuario, $password, $base_datos);
 

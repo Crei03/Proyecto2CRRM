@@ -1,6 +1,5 @@
-
 $(document).ready(function() {
-    // Cargar proveedores al cargar la página
+    
     numeroCheque();
     cargarProveedores();
     idProveedor();
@@ -131,11 +130,11 @@ function numeroCheque() {
         url: './DB/cheque.php',
         data: { action: 'cheque' }, // Agregar el parámetro 'action'
         success: function(response) {
-            if (response.numero_cheque) {
-                var numeroCheque = parseInt(response.numero_cheque) + 1;
+            if (response.numero_ck) {
+                var numeroCheque = parseInt(response.numero_ck) + 1;
                 $('#numeroCheque').val(numeroCheque);
             } else {
-                console.error('No se pudo obtener el número de cheque. ' + (response.message || ''));
+                $('#numeroCheque').val(1);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -160,7 +159,7 @@ $(document).ready(function() {
             $.ajax({
                 type: 'GET',
                 url: './DB/cheque.php',  // Ruta hacia tu archivo PHP
-                data: { numero_cheque: numeroCheque },  // Enviar el número de cheque al PHP
+                data: { numero_ck: numeroCheque },  // Enviar el número de cheque al PHP
                 success: function(response) {
                     try {
                         // Parsear la respuesta JSON
@@ -175,7 +174,7 @@ $(document).ready(function() {
                             location.reload(true);
                         } else if(cheque.status !== 'error' && cheque.estado === 'vigente') {
                             // Asignar los datos del cheque a los campos del formulario
-                            $('#numeroCheque').val(cheque.numero_cheque);
+                            $('#numeroCheque').val(cheque.numero_ck);
                             $('#fechaCheque').val(cheque.fecha);
                             $('#proveedorCheque').val(cheque.proveedor_id);  // Asegúrate de que coincida con los valores del select
                             $('#montoCheque').val(cheque.monto);
@@ -184,7 +183,7 @@ $(document).ready(function() {
                             document.getElementById('Anular-cheque').style.display = 'inline-block';
                     
                         }else{
-                            alert(`El cheque número: ${cheque.numero_cheque} esta anulado :(`)
+                            alert(`El cheque número: ${cheque.numero_ck} esta anulado :(`)
                             document.getElementById('Anular-cheque').style.display = 'none';
                         }
                     } catch (e) {
@@ -204,23 +203,23 @@ $(document).ready(function() {
 
 if (document.getElementById('Anular-cheque')){
     document.getElementById('Anular-cheque').addEventListener('click', function(){
-        let numero_cheque = document.getElementById('numeroCheque').value; 
+        let numero_ck = document.getElementById('numeroCheque').value; 
     
         $.ajax({
             type: 'POST',
             url: './DB/cheque.php',
             data: {
-                numero_cheque: numero_cheque,
+                numero_ck: numero_ck,
                 fecha_anulacion: fechaActual() 
             },
             success: function(response) {
                 try {
                     response = response; 
                     if (response.status === 'success') {
-                        alert(`Cheque número ${numero_cheque} anulado exitosamente!`);
+                        alert(`Cheque número ${numero_ck} anulado exitosamente!`);
                         window.location.href = 'cheque.html';
                     } else {
-                        alert(`El cheque número ${numero_cheque} no se pudo anular: ${response.message}`);
+                        alert(`El cheque número ${numero_ck} no se pudo anular: ${response.message}`);
                     }
                 } catch(e) {
                     console.error("Error al procesar la respuesta: ", e);
@@ -234,6 +233,6 @@ if (document.getElementById('Anular-cheque')){
 }
 
 
-    
+
 
 

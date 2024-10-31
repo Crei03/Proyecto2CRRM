@@ -1,6 +1,11 @@
 class NumeroATexto {
     static UNIDADES = ["", "UNO", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE"];
-    static DECENAS = ["DIEZ", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE", "DIECISEIS", "DIECISIETE", "DIECIOCHO", "DIECINUEVE", "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA"];
+    static DECENAS = [
+        "DIEZ", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE",
+        "DIECISEIS", "DIECISIETE", "DIECIOCHO", "DIECINUEVE",
+        "VEINTE", "TREINTA", "CUARENTA", "CINCUENTA",
+        "SESENTA", "SETENTA", "OCHENTA", "NOVENTA"
+    ];
     static CENTENAS = ["", "CIENTO ", "DOSCIENTOS ", "TRESCIENTOS ", "CUATROCIENTOS ", "QUINIENTOS ", "SEISCIENTOS ", "SETECIENTOS ", "OCHOCIENTOS ", "NOVECIENTOS "];
 
     constructor() {}
@@ -48,16 +53,15 @@ class NumeroATexto {
             return this.getUnidades(num);
         } else if (n >= 10 && n < 20) {
             return NumeroATexto.DECENAS[n - 10];
-        } else if (n >= 20) {
+        } else if (n >= 20 && n < 30) {
+            const unidad = n % 10;
+            return unidad === 0 ? "VEINTE" : "VEINTI" + this.getUnidades(String(unidad));
+        } else {
             const decena = Math.floor(n / 10);
             const unidad = n % 10;
-            if (unidad === 0) {
-                return NumeroATexto.DECENAS[decena + 8];
-            } else {
-                return NumeroATexto.DECENAS[decena + 8] + " Y " + NumeroATexto.UNIDADES[unidad];
-            }
+            const decenaText = NumeroATexto.DECENAS[decena + 8];
+            return unidad === 0 ? decenaText : decenaText + " Y " + this.getUnidades(String(unidad));
         }
-        return "";
     }
 
     getCentenas(num) {
@@ -82,7 +86,7 @@ class NumeroATexto {
         } else if (miles > 1) {
             let n = this.getCentenas(m);
             if (n.trim().endsWith("UNO")) {
-                n = n.substring(0, n.length - 4) + "";
+                n = n.trim().slice(0, -3) + "UN";
             }
             return n + " MIL " + this.getCentenas(c);
         } else {
@@ -94,14 +98,15 @@ class NumeroATexto {
         const miles = numero.substring(numero.length - 6);
         const millon = numero.substring(0, numero.length - 6);
         const millones = parseInt(millon);
-        let n = " ";
+        let n = "";
         if (millones === 1) {
             n = "UN MILLON ";
         } else if (millones > 1) {
-            n = this.getCentenas(millon) + " MILLONES ";
-            if (n.trim().endsWith("UNO MILLONES")) {
-                n = n.substring(0, n.length - 12) + " ";
+            let millonesText = this.getCentenas(millon).trim();
+            if (millonesText.endsWith("UNO")) {
+                millonesText = millonesText.slice(0, -3) + "UN";
             }
+            n = millonesText + " MILLONES ";
         }
         return n + this.getMiles(miles);
     }

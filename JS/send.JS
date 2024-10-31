@@ -6,7 +6,7 @@ $(document).ready(function(){
 });
 function sendCheque(){
     const cheque = {
-        numero_cheque: $('#numeroCheque').val(),
+        numero_ck: $('#numeroCheque').val(),
         fecha: $('#fechaCheque').val(),
         proveedor_id: $('#proveedorCheque').val(),
         monto: parseFloat($('#montoCheque').val()),
@@ -106,7 +106,7 @@ function validarEnvios(){
 
         // Validar el campo "Proveedor"
         let proveedorCheque = $('#proveedorCheque').val();
-        if (proveedorCheque === '1' || proveedorCheque === '') {
+        if (proveedorCheque === '') {
             isValid = false;
             alert('Debe seleccionar un proveedor válido.');
         }
